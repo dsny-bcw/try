@@ -104,6 +104,11 @@
              "<span class='green-text text-darken-4 layersize'>Bright View</span>": Stadia_OSMBright,
              "<span class='green-text text-darken-4 layersize'>Dark View</span>": Stadia_AlidadeSmoothDark
           };
+	var overlayMaps = {
+            "<span class='green-text text-darken-4 layersize'>CWZ Zones</span>": zoneLayer
+        }
+	var layerControl = L.control.layers(baseMaps, overlayMaps,  {position: 'bottomright'}).addTo(map);
+        googleStreets.addTo(map);	
 
 	
     	</script>
