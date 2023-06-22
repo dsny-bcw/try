@@ -19,7 +19,11 @@
       	<div id="map"></div>
 	<script>
         	var map = L.map('map').setView([40.72215448921957, -73.98616799064006], 12);
-		 //Stamen
+		 L.control.zoom({
+              position:'bottomleft'
+          }).addTo(map);
+		 
+	//Stamen
           var stamen = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.png', {
             attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'});
     
@@ -90,16 +94,16 @@
           var baseMaps = {
 
             "<span class='left green-text text-darken-4 layersize'>Street</span>": googleStreets,
-            // "Google Satellite Map": googleSat,
+             "Google Satellite Map": googleSat,
             "<span class='left green-text text-darken-4 layersize'>Satellite</span>": googleHybrid,
-            // "Google Terrain Map": googleTerrain,
-            // "Esri Street Map": Esri_WorldStreetMap,
-            // "Esri Topo Map": Esri_WorldTopoMap,
-            // "Open Street Map": osm,
-            // "Stamen Terrain Map": Stamen_Terrain,
-            // "Stamen Street Map": stamen,
-            // "<span class='green-text text-darken-4 layersize'>Bright View</span>": Stadia_OSMBright,
-            // "<span class='green-text text-darken-4 layersize'>Dark View</span>": Stadia_AlidadeSmoothDark
+             "Google Terrain Map": googleTerrain,
+             "Esri Street Map": Esri_WorldStreetMap,
+             "Esri Topo Map": Esri_WorldTopoMap,
+             "Open Street Map": osm,
+             "Stamen Terrain Map": Stamen_Terrain,
+             "Stamen Street Map": stamen,
+             "<span class='green-text text-darken-4 layersize'>Bright View</span>": Stadia_OSMBright,
+             "<span class='green-text text-darken-4 layersize'>Dark View</span>": Stadia_AlidadeSmoothDark
             
 
           };
