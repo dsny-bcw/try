@@ -19,9 +19,7 @@
       	<div id="map"></div>
 	<script>
         	var map = L.map('map').setView([40.72215448921957, -73.98616799064006], 12);
-		 L.control.zoom({
-              position:'bottomleft'
-          }).addTo(map);
+		
 		 
 	//Stamen
           var stamen = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.png', {
@@ -107,6 +105,11 @@
             
 
           };
+
+		var layerControl = L.control.layers(baseMaps, overlayMaps,  {position: 'bottomright'}).addTo(map);
+        googleStreets.addTo(map);
+        map.addLayer(zoneLayer);
+         info.addTo(map); 
     	</script>
   </body>
 </html>
