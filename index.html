@@ -44,7 +44,13 @@ L.geoJSON(zone.features, {
     style: myStyle
 }).addTo(map);
 	});
-	
+
+var circle = L.circle([40.776411,-73.910089], {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.5,
+    radius: 10
+}).addTo(map);
 		
     	</script>
   </body>
