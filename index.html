@@ -104,11 +104,205 @@
              "<span class='green-text text-darken-4 layersize'>Bright View</span>": Stadia_OSMBright,
              "<span class='green-text text-darken-4 layersize'>Dark View</span>": Stadia_AlidadeSmoothDark
           };
-	var overlayMaps = {
+	//setup control to show zone info on hover
+          var info = L.control();
+          info.setPosition('bottomleft');
+
+          info.onAdd = function (map){
+            this._div = L.DomUtil.create('div', 'info');
+            this.update();
+            return this._div;
+          };
+          
+
+          info.update = function(props){
+            var carters = 
+            this._div.innerHTML = '<h4>Commercial Waste Zone</h4>' + (props ?
+              '<b>' + props.zone : 'Hover over a zone');
+          };
+
+
+          
+
+         
+          //Add highlighted layout
+          function highlightFeature(e) {
+            var layer = e.target;
+
+            layer.setStyle({
+                weight: 1.2,
+                dashArray: '',
+                opacity: 0.8,
+                fillOpacity: 0.4
+            });
+
+            if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+                layer.bringToFront();
+            };
+            info.update(layer.feature.properties);
+        }
+
+        var zoneLayer;
+
+        function resetHighlight(e) {
+            zoneLayer.resetStyle(e.target);
+        }
+
+        function zoomToFeature(e) {
+            map.fitBounds(e.target.getBounds());
+        }
+
+        function onEachFeature(feature, layer) {
+            layer.on({
+                mouseover: highlightFeature,
+                mouseout: resetHighlight,
+                click: zoomToFeature
+            });
+        }
+
+        //set zone layout styles
+        function zoneOptions(feature)  {
+
+          var styles = {
+                  weight: 1,
+                  dashArray: '1',
+                  opacity: 0.5,
+                  fillOpacity: 0.3,
+              };
+          
+
+             if (feature.properties.zone_name == 'Midtown South'){
+                styles.fillColor = "#ff0000";
+                styles.color = "#ff0000";
+                return styles;
+                
+             } else if (feature.properties.zone_name == 'Bronx East'){
+                styles.fillColor = "#00b386";
+                styles.color = "#00b386";
+                return styles;
+                
+             } else if (feature.properties.zone_name == 'Bronx West'){
+                styles.fillColor = "#ffff99";
+                styles.color = "#ffff99";
+                return styles;
+                
+             } else if (feature.properties.zone_name == 'Upper Manhattan'){
+                styles.fillColor = "#0099ff";
+                styles.color = "#0099ff";
+                return styles;
+                
+             } else if (feature.properties.zone_name == 'Manhattan Northeast'){
+                styles.fillColor = "#ff9933";
+                styles.color = "#ff9933";
+                return styles;
+                
+             } else if (feature.properties.zone_name == 'Manhattan West'){
+                styles.fillColor = "#00b386";
+                styles.color = "#00b386";
+                return styles;
+                
+             } else if (feature.properties.zone_name == 'Midtown North'){
+                styles.fillColor = "#ffff99";
+                styles.color = "#ffff99";
+                return styles;
+                
+             } else if (feature.properties.zone_name == 'Manhattan Southwest'){
+                styles.fillColor = "#000099";
+                styles.color = "#000099";
+                return styles;
+                
+             } else if (feature.properties.zone_name == 'Manhattan Southeast'){
+                styles.fillColor = "#0099ff";
+                styles.color = "#0099ff";
+                return styles;
+                
+             } else if (feature.properties.zone_name == 'Lower Manhattan'){
+                styles.fillColor = "#996633";
+                styles.color = "#996633";
+                return styles;
+                
+             } else if (feature.properties.zone_name == 'Queens West'){
+                styles.fillColor = "#000099";
+                styles.color = "#000099";
+                return styles;
+                
+             } else if (feature.properties.zone_name == 'Queens West'){
+                styles.fillColor = "#000099";
+                styles.color = "#000099";
+                return styles;
+                
+             } else if (feature.properties.zone_name == 'Queens Northeast'){
+                styles.fillColor = "#ff0000";
+                styles.color = "#ff0000";
+                return styles;
+                
+             } else if (feature.properties.zone_name == 'Queens Central'){
+                styles.fillColor = "#ff9933";
+                styles.color = "#ff9933";
+                return styles;
+                
+             } else if (feature.properties.zone_name == 'Brooklyn North'){
+                styles.fillColor = "#ff0000";
+                styles.color = "#ff0000";
+                return styles;
+                
+             } else if (feature.properties.zone_name == 'Brooklyn West'){
+                styles.fillColor = "#00b386";
+                styles.color = "#00b386";
+                return styles;
+                
+             } else if (feature.properties.zone_name == 'Brooklyn East'){
+                styles.fillColor = "#0099ff";
+                styles.color = "#0099ff";
+                return styles;
+                
+             } else if (feature.properties.zone_name == 'Queens Southeast'){
+                styles.fillColor = "#00b386";
+                styles.color = "#00b386";
+                return styles;
+                
+             } else if (feature.properties.zone_name == 'Brooklyn South'){
+                styles.fillColor = "#ff9933";
+                styles.color = "#ff9933";
+                return styles;
+                
+             } else if (feature.properties.zone_name == 'Brooklyn Southwest'){
+                styles.fillColor = "#ffff99";
+                styles.color = "#ffff99";
+                return styles;
+                
+             } else if (feature.properties.zone_name == 'Staten Island'){
+                styles.fillColor = "#000099";
+                styles.color = "#000099";
+                return styles;
+                
+             } else {
+                styles.fillColor = "#ff0000";
+                styles.color = "#ff0000";
+                return styles;
+              }
+
+            
+          };
+
+        //get zone layout data and styles
+        zoneLayer = L.geoJson(zone, {style: zoneOptions,onEachFeature: onEachFeature});        
+
+        //create layout control
+        var overlayMaps = {
             "<span class='green-text text-darken-4 layersize'>CWZ Zones</span>": zoneLayer
         }
-	var layerControl = L.control.layers(baseMaps, overlayMaps,  {position: 'bottomright'}).addTo(map);
-        googleStreets.addTo(map);	
+
+
+        
+        //add default layout and map
+        var layerControl = L.control.layers(baseMaps, overlayMaps,  {position: 'bottomright'}).addTo(map);
+        googleStreets.addTo(map);
+        map.addLayer(zoneLayer);
+         info.addTo(map); 
+
+        
+         
 
 	
     	</script>
