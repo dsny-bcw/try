@@ -17,7 +17,7 @@
   </head>
   <body>
       	<div id="map"></div>
-	<script>src="dsnyPlannedCommercialWasteZones.js"</script>
+	<script src="dsnyPlannedCommercialWasteZones.js"></script>
 	<script>
         	var map = L.map('map', {center: [40.713312, -73.977407],
                                   zoom: 11,
@@ -38,7 +38,7 @@
     "opacity": 0.65
 };
 
-L.geoJSON(zone.feature, {
+L.geoJSON(zone.features, {
     style: myStyle
 }).addTo(map);
 	
